@@ -123,7 +123,7 @@ export default function AdminLogin() {
             </p>
             <div className="bg-blue-50 p-3 rounded-lg text-xs space-y-1 text-blue-900">
               <p><strong>Email:</strong> admin@teaminspirecare.com</p>
-              <p><strong>Password:</strong> admin123</p>
+              <p><strong>Password:</strong> contact your developer</p>
             </div>
           </div>
         </div>
