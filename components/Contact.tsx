@@ -69,14 +69,14 @@ export default function Contact() {
             {/* Visual Info Cards */}
             <div className="space-y-3">
               {/* Phone Card */}
-              <a href="tel:+91-XXXX-XXXX-XX" className="flex items-center justify-between p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-2xl shadow-xs hover:shadow-md hover:border-slate-200 dark:hover:border-slate-700/80 transition-all group">
+              <a href="tel:+91-91671-33346" className="flex items-center justify-between p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-2xl shadow-xs hover:shadow-md hover:border-slate-200 dark:hover:border-slate-700/80 transition-all group">
                 <div className="flex items-center gap-4">
                   <div className="p-3 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 rounded-xl flex-shrink-0">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
                     <h4 className="font-bold text-slate-900 dark:text-white text-sm">Phone</h4>
-                    <p className="text-blue-600 dark:text-blue-400 font-bold text-base mt-0.5">+91-XXXX-XXXX-XX</p>
+                    <p className="text-blue-600 dark:text-blue-400 font-bold text-base mt-0.5">+91-91671-33346</p>
                     <p className="text-xs text-slate-500 dark:text-slate-400">Available 24/7 for support</p>
                   </div>
                 </div>
@@ -151,7 +151,7 @@ export default function Contact() {
               </div>
               <div className="text-right flex flex-col items-end gap-1 flex-shrink-0">
                 <span className="text-red-600 dark:text-red-400 font-extrabold text-lg tracking-tight">
-                  +91-XXXX-XXXX-99
+                  +91-91671-33346
                 </span>
                 <span className="px-2 py-0.5 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-[10px] font-bold rounded-full">
                   24/7 Available

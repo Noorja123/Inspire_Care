@@ -92,11 +92,11 @@ export default function Footer() {
             <ul className="space-y-3.5 text-sm text-slate-600 dark:text-slate-400">
               <li>
                 <p className="font-bold text-slate-500 dark:text-slate-400">Emergency Hotline</p>
-                <p className="text-red-600 dark:text-red-400 font-extrabold text-base tracking-wide mt-0.5">+91-XXXX-XXXX-99</p>
+                <p className="text-red-600 dark:text-red-400 font-extrabold text-base tracking-wide mt-0.5">+91-91671-33346</p>
               </li>
               <li>
                 <p className="font-bold text-slate-500 dark:text-slate-400">General Inquiries</p>
-                <p className="font-semibold text-slate-700 dark:text-slate-300 mt-0.5">+91-XXXX-XXXX-XX</p>
+                <p className="font-semibold text-slate-700 dark:text-slate-300 mt-0.5">+91-91671-33346</p>
               </li>
               <li>
                 <p className="font-bold text-slate-500 dark:text-slate-400">Email Support</p>
