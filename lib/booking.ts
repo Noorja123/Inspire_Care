@@ -206,7 +206,7 @@ export async function createAppointmentTransaction(payload: BookingPayload) {
     const startSecs = timeToSeconds(plan.start_time);
     const endSecs = timeToSeconds(plan.end_time);
 
-    if (slotSecs < startSecs || slotSecs + (plan.slot_duration || 30) * 60 > endSecs) {
+    if (slotSecs < startSecs || slotSecs + (plan.slot_duration || 10) * 60 > endSecs) {
       return { success: false, error: "The requested slot falls outside the doctor's active schedule hours." };
     }
 
@@ -335,6 +335,9 @@ export async function createAppointmentTransaction(payload: BookingPayload) {
         date: payload.appointmentDate,
         time: payload.appointmentTime,
         symptoms: payload.symptomsDescription,
+        opNumber: appointment.op_number,
+        appointmentType: appointment.appointment_type,
+        visitReason: appointment.visit_reason,
       },
     };
   } catch (err: any) {
@@ -642,7 +645,7 @@ export async function rescheduleAppointment(
     const startSecs = timeToSeconds(plan.start_time);
     const endSecs = timeToSeconds(plan.end_time);
 
-    if (slotSecs < startSecs || slotSecs + (plan.slot_duration || 30) * 60 > endSecs) {
+    if (slotSecs < startSecs || slotSecs + (plan.slot_duration || 10) * 60 > endSecs) {
       return { success: false, error: "The new slot falls outside the doctor's active schedule hours." };
     }
 

@@ -58,7 +58,7 @@ export async function addDoctor(payload: DoctorPayload & { is_active: boolean })
                 weekday,
                 start_time: dayInfo.start || '09:00',
                 end_time: dayInfo.end || '17:00',
-                slot_duration: 30,
+                slot_duration: 10,
                 is_available: true
               });
             }
@@ -141,7 +141,7 @@ export async function updateDoctor(id: string, payload: DoctorPayload) {
                 weekday,
                 start_time: dayInfo.start || '09:00',
                 end_time: dayInfo.end || '17:00',
-                slot_duration: 30,
+                slot_duration: 10,
                 is_available: true
               });
             }

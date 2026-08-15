@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS doctor_availability (
   weekday INTEGER NOT NULL CHECK (weekday BETWEEN 0 AND 6), -- 0 = Sunday, 1 = Monday, etc.
   start_time TIME NOT NULL,
   end_time TIME NOT NULL,
-  slot_duration INTEGER DEFAULT 30, -- default slot duration in minutes
+  slot_duration INTEGER DEFAULT 10, -- default slot duration in minutes
   is_available BOOLEAN DEFAULT TRUE,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(doctor_id, weekday)
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS doctor_availability_exceptions (
   is_available BOOLEAN NOT NULL DEFAULT TRUE, -- TRUE = open for business on exception, FALSE = closed
   start_time TIME,
   end_time TIME,
-  slot_duration INTEGER DEFAULT 30,
+  slot_duration INTEGER DEFAULT 10,
   reason TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(doctor_id, exception_date)

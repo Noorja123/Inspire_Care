@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { createClient } from '@/lib/supabase/client'
-import { CalendarDays, Download, AlertTriangle, ShieldCheck, X } from 'lucide-react'
+import { CalendarDays, Download, AlertTriangle, ShieldCheck, X, FileDown } from 'lucide-react'
 import { createAppointmentTransaction, createSlotHold, releaseSlotHold } from '@/lib/booking'
 import { getGoogleCalendarUrl, downloadIcsFile } from '@/lib/calendar'
+import { generateReceiptPdf } from '@/lib/pdf'
 
 export default function BookAppointmentCard({ defaultDepartment, onClose }: { defaultDepartment?: string; onClose?: () => void }) {
   const supabase = createClient()
@@ -536,15 +537,57 @@ export default function BookAppointmentCard({ defaultDepartment, onClose }: { de
             {message === 'success' ? (
               <div className="space-y-3">
                 <p className="font-semibold text-green-950">Appointment Request Submitted!</p>
-                <p className="text-sm mt-1 text-green-800">Your request is received. You can now sync the appointment with your calendar:</p>
                 
                 {createdApt && (
-                  <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                  <>
+                    <div className="bg-white/80 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-3 text-left space-y-1.5 text-xs shadow-xs text-slate-700 dark:text-slate-300">
+                      <p className="font-bold text-slate-800 dark:text-slate-200">Receipt Summary:</p>
+                      <div className="grid grid-cols-3 gap-y-1 text-slate-600 dark:text-slate-400">
+                        <span className="font-semibold">OP Number:</span>
+                        <span className="col-span-2 font-mono font-bold text-blue-600 dark:text-blue-400">{createdApt.opNumber || 'N/A'}</span>
+
+                        <span className="font-semibold">Doctor:</span>
+                        <span className="col-span-2">Dr. {createdApt.doctorName} ({createdApt.doctorSpecialization})</span>
+                        
+                        <span className="font-semibold">Scheduled Date:</span>
+                        <span className="col-span-2">{new Date(createdApt.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                        
+                        <span className="font-semibold">Time Slot:</span>
+                        <span className="col-span-2">{createdApt.time} (10 mins)</span>
+                      </div>
+                    </div>
+
+                    <div className="pt-1">
+                      <button
+                        type="button"
+                        onClick={() => generateReceiptPdf({
+                          opNumber: createdApt.opNumber || 'N/A',
+                          patientName: createdApt.patientName || 'Patient',
+                          doctorName: createdApt.doctorName,
+                          doctorSpecialization: createdApt.doctorSpecialization,
+                          date: createdApt.date,
+                          time: createdApt.time,
+                          appointmentType: createdApt.appointmentType,
+                          visitReason: createdApt.visitReason,
+                        })}
+                        className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded shadow-sm transition cursor-pointer"
+                      >
+                        <FileDown className="w-3.5 h-3.5" />
+                        Download PDF Receipt
+                      </button>
+                    </div>
+                  </>
+                )}
+
+                <p className="text-xs text-green-800">You can also sync the appointment with your calendar:</p>
+                
+                {createdApt && (
+                  <div className="flex flex-col sm:flex-row gap-2">
                     <a
                       href={getGoogleCalendarUrl(createdApt)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 border border-slate-200 hover:border-blue-400 hover:bg-blue-50 text-slate-700 text-xs font-semibold rounded bg-white shadow-sm transition"
+                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 border border-slate-200 dark:border-slate-800 hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 text-slate-700 dark:text-slate-350 text-xs font-semibold rounded bg-white dark:bg-slate-900 shadow-sm transition"
                     >
                       <CalendarDays className="w-3.5 h-3.5 text-blue-600" />
                       Google Calendar
@@ -552,7 +595,7 @@ export default function BookAppointmentCard({ defaultDepartment, onClose }: { de
                     <button
                       type="button"
                       onClick={() => downloadIcsFile(createdApt)}
-                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 border border-slate-200 hover:border-primary hover:bg-blue-50 text-slate-700 text-xs font-semibold rounded bg-white shadow-sm transition"
+                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 border border-slate-200 dark:border-slate-800 hover:border-primary hover:bg-blue-50 dark:hover:bg-blue-950/20 text-slate-700 dark:text-slate-355 text-xs font-semibold rounded bg-white dark:bg-slate-900 shadow-sm transition"
                     >
                       <Download className="w-3.5 h-3.5 text-primary" />
                       Download .ics

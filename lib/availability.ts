@@ -20,7 +20,7 @@ export interface TimeSlot {
 export function generateSlots({
   startTime,
   endTime,
-  slotDuration = 30,
+  slotDuration = 10,
   bufferTime = 0,
   existingBookings = [],
   isOnLeave = false,
@@ -114,7 +114,7 @@ export async function getDoctorDaySlots(
       schedulingHours = {
         start_time: exception.start_time,
         end_time: exception.end_time,
-        slot_duration: exception.slot_duration || 30,
+        slot_duration: exception.slot_duration || 10,
       };
     } else {
       // 3. Fallback to weekly weekday plan
@@ -141,7 +141,7 @@ export async function getDoctorDaySlots(
       schedulingHours = {
         start_time: plan.start_time,
         end_time: plan.end_time,
-        slot_duration: plan.slot_duration || 30,
+        slot_duration: plan.slot_duration || 10,
       };
     }
 

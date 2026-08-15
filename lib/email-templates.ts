@@ -60,7 +60,7 @@ export function getEmailTemplate(type: string, details: EmailTemplateDetails): {
                 </tr>
                 <tr>
                   <td style="color: #64748b; font-weight: 500; padding: 4px 0;">Time Slot:</td>
-                  <td style="padding: 4px 0;">${details.time} (30 Minutes)</td>
+                  <td style="padding: 4px 0;">${details.time} (10 Minutes)</td>
                 </tr>
                 <tr>
                   <td style="color: #64748b; font-weight: 500; padding: 4px 0;">Status:</td>

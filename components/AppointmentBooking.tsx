@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { createClient } from '@/lib/supabase/client';
-import { Loader2, X, Calendar, Clock, User, CheckCircle, CalendarDays, Download, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { Loader2, X, Calendar, Clock, User, CheckCircle, CalendarDays, Download, AlertTriangle, ShieldCheck, FileDown } from 'lucide-react';
 import { getDoctorDaySlots, TimeSlot } from '@/lib/availability';
 import { createAppointmentTransaction, createSlotHold, releaseSlotHold } from '@/lib/booking';
 import { getGoogleCalendarUrl, downloadIcsFile } from '@/lib/calendar';
+import { generateReceiptPdf } from '@/lib/pdf';
 import SlotGrid from '@/components/booking/SlotGrid';
 
 interface Doctor {
@@ -528,6 +529,9 @@ export default function AppointmentBooking({
               <div className="bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 rounded-xl p-4 max-w-md mx-auto text-left space-y-2 text-sm shadow-sm">
                 <p className="font-bold text-slate-800 dark:text-slate-200">Booking Summary:</p>
                 <div className="grid grid-cols-3 gap-y-1.5 text-slate-600 dark:text-slate-350">
+                  <span className="font-semibold">OP Number:</span>
+                  <span className="col-span-2 font-mono font-bold text-blue-600 dark:text-blue-400">{createdAppointment.opNumber || 'N/A'}</span>
+
                   <span className="font-semibold">Doctor:</span>
                   <span className="col-span-2">Dr. {createdAppointment.doctorName} ({createdAppointment.doctorSpecialization})</span>
                   
@@ -535,8 +539,27 @@ export default function AppointmentBooking({
                   <span className="col-span-2">{new Date(createdAppointment.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                   
                   <span className="font-semibold">Time Slot:</span>
-                  <span className="col-span-2">{createdAppointment.time} (30 mins)</span>
+                  <span className="col-span-2">{createdAppointment.time} (10 mins)</span>
                 </div>
+              </div>
+
+              <div className="max-w-md mx-auto pt-1">
+                <button
+                  onClick={() => generateReceiptPdf({
+                    opNumber: createdAppointment.opNumber || 'N/A',
+                    patientName: formData.patientName || createdAppointment.patientName || 'Patient',
+                    doctorName: createdAppointment.doctorName,
+                    doctorSpecialization: createdAppointment.doctorSpecialization,
+                    date: createdAppointment.date,
+                    time: createdAppointment.time,
+                    appointmentType: createdAppointment.appointmentType,
+                    visitReason: createdAppointment.visitReason,
+                  })}
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-lg active:scale-[0.98] duration-150 cursor-pointer"
+                >
+                  <FileDown className="w-5 h-5" />
+                  Download Booking Receipt (PDF)
+                </button>
               </div>
 
               <div className="space-y-3 pt-2">
