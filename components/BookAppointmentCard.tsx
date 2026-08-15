@@ -35,8 +35,19 @@ export default function BookAppointmentCard({ defaultDepartment, onClose }: { de
   const [countdown, setCountdown] = useState('')
   const [activeHold, setActiveHold] = useState<{ doctorId: string; date: string; slotId: string } | null>(null)
 
-  // Predefined time slots
-  const timeSlots = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00']
+  // Generate 10-minute time slots between 09:00 and 17:00
+  const timeSlots = (() => {
+    const slots = []
+    let current = new Date(2000, 0, 1, 9, 0, 0)
+    const end = new Date(2000, 0, 1, 17, 0, 0)
+    while (current.getTime() < end.getTime()) {
+      const hh = current.getHours().toString().padStart(2, '0')
+      const mm = current.getMinutes().toString().padStart(2, '0')
+      slots.push(`${hh}:${mm}`)
+      current = new Date(current.getTime() + 10 * 60000)
+    }
+    return slots
+  })()
 
   // Generate or retrieve a persistent client session UUID
   useEffect(() => {
@@ -268,11 +279,26 @@ export default function BookAppointmentCard({ defaultDepartment, onClose }: { de
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target
-    setForm((s) => ({
-      ...s,
-      [name]: value,
-      ...(name === 'preferredDate' || name === 'startTime' || name === 'endTime' ? { doctorId: '' } : {}),
-    }))
+    setForm((s) => {
+      const updated = {
+        ...s,
+        [name]: value,
+        ...(name === 'preferredDate' || name === 'startTime' || name === 'endTime' ? { doctorId: '' } : {}),
+      }
+      if (name === 'startTime') {
+        if (value) {
+          const [h, m] = value.split(':').map(Number)
+          const date = new Date(2000, 0, 1, h, m, 0)
+          const endDate = new Date(date.getTime() + 10 * 60000)
+          const eh = endDate.getHours().toString().padStart(2, '0')
+          const em = endDate.getMinutes().toString().padStart(2, '0')
+          updated.endTime = `${eh}:${em}`
+        } else {
+          updated.endTime = ''
+        }
+      }
+      return updated
+    })
   }
 
   const handleSubmit = async (e?: React.FormEvent) => {
@@ -287,17 +313,11 @@ export default function BookAppointmentCard({ defaultDepartment, onClose }: { de
     if (!form.patientName) errors.push('Patient name is required')
     if (!form.phone) errors.push('Phone number is required')
     if (!form.preferredDate) errors.push('Date is required')
-    if (!form.startTime) errors.push('Start time is required')
-    if (!form.endTime) errors.push('End time is required')
+    if (!form.startTime) errors.push('Time slot is required')
     if (!form.doctorId) errors.push('Please select a doctor')
 
     if (errors.length > 0) {
       setMessage(errors.join(', '))
-      return
-    }
-
-    if (form.endTime <= form.startTime) {
-      setMessage('End time must be after start time')
       return
     }
 
@@ -436,43 +456,21 @@ export default function BookAppointmentCard({ defaultDepartment, onClose }: { de
           )}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-350">Start Time</label>
-            <select
-              name="startTime"
-              value={form.startTime}
-              onChange={handleSelectChange}
-              className="w-full px-3 py-2 border border-border dark:border-slate-800 rounded-lg bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-            >
-              <option value="">Select start time</option>
-              {timeSlots.map((slot) => (
-                <option key={`start-${slot}`} value={slot}>
-                  {slot}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-350">End Time</label>
-            <select
-              name="endTime"
-              value={form.endTime}
-              onChange={handleSelectChange}
-              disabled={!form.startTime}
-              className="w-full px-3 py-2 border border-border dark:border-slate-800 rounded-lg bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-primary disabled:bg-gray-100 dark:disabled:bg-slate-800 disabled:text-slate-400 dark:disabled:text-slate-500 disabled:cursor-not-allowed"
-            >
-              <option value="">Select end time</option>
-              {timeSlots
-                .filter((slot) => slot > form.startTime)
-                .map((slot) => (
-                  <option key={`end-${slot}`} value={slot}>
-                    {slot}
-                  </option>
-                ))}
-            </select>
-          </div>
+        <div>
+          <label className="block text-sm font-medium mb-1 text-slate-700 dark:text-slate-355">Preferred Time Slot</label>
+          <select
+            name="startTime"
+            value={form.startTime}
+            onChange={handleSelectChange}
+            className="w-full px-3 py-2 border border-border dark:border-slate-800 rounded-lg bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+            <option value="">Select a time slot</option>
+            {timeSlots.map((slot) => (
+              <option key={`slot-${slot}`} value={slot}>
+                {slot}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>
@@ -481,13 +479,13 @@ export default function BookAppointmentCard({ defaultDepartment, onClose }: { de
             name="doctorId"
             value={form.doctorId}
             onChange={handleSelectChange}
-            disabled={!form.startTime || !form.endTime || loadingDoctors || availableDoctors.length === 0}
-            className="w-full px-3 py-2 border border-border dark:border-slate-800 rounded-lg bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-primary disabled:bg-gray-100 dark:disabled:bg-slate-800 disabled:text-slate-400 dark:disabled:text-slate-500 disabled:cursor-not-allowed"
+            disabled={!form.startTime || loadingDoctors || availableDoctors.length === 0}
+            className="w-full px-3 py-2 border border-border dark:border-slate-800 rounded-lg bg-white dark:bg-slate-955 text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-primary disabled:bg-gray-100 dark:disabled:bg-slate-800 disabled:text-slate-400 dark:disabled:text-slate-500 disabled:cursor-not-allowed"
           >
             <option value="">
               {loadingDoctors 
                 ? 'Loading doctors...' 
-                : (!form.preferredDate || !form.startTime || !form.endTime) 
+                : (!form.preferredDate || !form.startTime) 
                 ? 'Select date and time first' 
                 : availableDoctors.length === 0 
                 ? 'No doctors available at this time' 
