@@ -138,14 +138,6 @@ export default function GalleryPage() {
                         <span className="text-white text-2xl">+</span>
                       </div>
                     </div>
-                    {/* Content */}
-                    <div className="p-4">
-                      <h3 className="font-bold text-foreground dark:text-white mb-1">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground dark:text-slate-400 line-clamp-2">{item.description}</p>
-                      <span className="inline-block text-xs bg-primary/10 dark:bg-blue-900/20 text-primary dark:text-blue-400 px-2 py-1 rounded mt-2 capitalize">
-                        {item.category}
-                      </span>
-                    </div>
                   </div>
                 ))}
               </div>
