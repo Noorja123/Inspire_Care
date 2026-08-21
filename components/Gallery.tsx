@@ -9,12 +9,12 @@ import { Button } from '@/components/ui/button';
 
 interface GalleryItem {
   id: string;
-  title: string;
-  description: string;
+  title?: string | null;
+  description?: string | null;
   image_url: string;
-  video_url: string;
-  category: string;
-  display_order: number;
+  video_url?: string | null;
+  category?: string | null;
+  display_order?: number;
 }
 
 export default function Gallery() {
@@ -81,7 +81,7 @@ export default function Gallery() {
                     {item.image_url ? (
                       <img
                         src={item.image_url}
-                        alt={item.title}
+                        alt={item.title || 'Hospital Gallery Image'}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     ) : (
@@ -94,7 +94,7 @@ export default function Gallery() {
                   {/* Overlay */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-300 flex items-center justify-center">
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center px-4 transform translate-y-2 group-hover:translate-y-0">
-                      <p className="text-white font-bold text-lg">{item.title}</p>
+                      {item.title && <p className="text-white font-bold text-lg">{item.title}</p>}
                       {item.category && (
                         <span className="inline-block mt-2 px-2 py-0.5 text-[10px] uppercase tracking-wider bg-white/20 text-white rounded font-semibold backdrop-blur-xs">
                           {item.category}
@@ -142,7 +142,7 @@ export default function Gallery() {
                       <div className="relative w-full h-96">
                         <img
                           src={selected.image_url}
-                          alt={selected.title}
+                          alt={selected.title || 'Hospital Gallery Image'}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -150,9 +150,11 @@ export default function Gallery() {
 
                     {/* Text Content */}
                     <div className="p-6 space-y-3">
-                      <h3 className="text-2xl font-bold text-foreground">
-                        {selected.title}
-                      </h3>
+                      {selected.title && (
+                        <h3 className="text-2xl font-bold text-foreground">
+                          {selected.title}
+                        </h3>
+                      )}
                       {selected.category && (
                         <p className="inline-block px-3 py-1 bg-primary/10 dark:bg-blue-400/10 text-primary dark:text-blue-400 text-xs font-semibold rounded-full capitalize">
                           {selected.category}

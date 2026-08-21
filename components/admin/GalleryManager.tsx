@@ -8,10 +8,10 @@ import ConfirmDialog from './ConfirmDialog';
 
 interface GalleryItem {
   id: string;
-  title: string;
-  description: string;
+  title: string | null;
+  description: string | null;
   image_url: string;
-  category: string;
+  category: string | null;
   is_active: boolean;
 }
 
@@ -79,11 +79,6 @@ export default function GalleryManager() {
     e.preventDefault();
     setUploadMessage(null);
 
-    if (!formData.title.trim()) {
-      setUploadMessage({ type: 'error', text: 'Title is required' });
-      return;
-    }
-
     // Only require file when adding new item, not when editing
     if (!editingId && !formData.file) {
       setUploadMessage({ type: 'error', text: 'Please select an image file' });
@@ -114,7 +109,7 @@ export default function GalleryManager() {
         } else {
           // Update metadata only
           const { error } = await supabase.from('gallery').update({
-            title: formData.title,
+            title: formData.title.trim() || null,
             description: formData.description || null,
             category: formData.category || null,
           }).eq('id', editingId);
@@ -218,11 +213,10 @@ export default function GalleryManager() {
 
           <input
             type="text"
-            placeholder="Title"
+            placeholder="Title (Optional)"
             value={formData.title}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             className="w-full border border-border rounded px-3 py-2"
-            required
           />
 
           <textarea
@@ -315,7 +309,7 @@ export default function GalleryManager() {
                   {item.image_url ? (
                     <img
                       src={item.image_url}
-                      alt={item.title}
+                      alt={item.title || 'Gallery image'}
                       className="w-full h-full object-cover"
                     />
                   ) : (
@@ -325,7 +319,9 @@ export default function GalleryManager() {
                   )}
                 </div>
                 <div className="p-4 space-y-2">
-                  <h3 className="font-semibold text-foreground line-clamp-1">{item.title}</h3>
+                  <h3 className="font-semibold text-foreground line-clamp-1">
+                    {item.title || <span className="text-muted-foreground italic font-normal">Untitled</span>}
+                  </h3>
                   {item.category && (
                     <p className="text-xs text-muted-foreground">{item.category}</p>
                   )}

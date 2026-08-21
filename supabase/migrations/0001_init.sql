@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS services (
 
 CREATE TABLE IF NOT EXISTS gallery (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  title text NOT NULL,
+  title text,
   description text,
   image_url text,
   category text,

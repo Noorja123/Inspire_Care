@@ -9,10 +9,10 @@ import { createClient } from '@/lib/supabase/client';
 
 interface GalleryItem {
   id: string;
-  title: string;
-  description: string;
+  title?: string | null;
+  description?: string | null;
   image_url: string;
-  category: string;
+  category?: string | null;
   is_active: boolean;
 }
 
@@ -45,7 +45,7 @@ export default function GalleryPage() {
   }, []);
 
   // Get unique categories from items
-  const categories = ['all', ...new Set(items.map(item => item.category).filter(Boolean))];
+  const categories = ['all', ...Array.from(new Set(items.map(item => item.category).filter((cat): cat is string => Boolean(cat))))];
   
   const filteredItems = selectedCategory === 'all'
     ? items
@@ -128,7 +128,7 @@ export default function GalleryPage() {
                       {item.image_url ? (
                         <img
                           src={item.image_url}
-                          alt={item.title}
+                          alt={item.title || 'Gallery image'}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                         />
                       ) : (
@@ -162,7 +162,7 @@ export default function GalleryPage() {
                 {filteredItems[selectedImageIdx]?.image_url ? (
                   <img
                     src={filteredItems[selectedImageIdx].image_url}
-                    alt={filteredItems[selectedImageIdx].title}
+                    alt={filteredItems[selectedImageIdx].title || 'Gallery image'}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -191,11 +191,17 @@ export default function GalleryPage() {
 
               {/* Details */}
               <div className="bg-white dark:bg-slate-900 p-6 border-t border-slate-100 dark:border-slate-800">
-                <h3 className="text-2xl font-bold mb-2 text-slate-900 dark:text-white">{filteredItems[selectedImageIdx]?.title}</h3>
-                <p className="text-muted-foreground dark:text-slate-400 mb-4">{filteredItems[selectedImageIdx]?.description}</p>
-                <span className="inline-block text-sm bg-primary/10 dark:bg-blue-900/20 text-primary dark:text-blue-400 px-3 py-1 rounded capitalize">
-                  {filteredItems[selectedImageIdx]?.category}
-                </span>
+                {filteredItems[selectedImageIdx]?.title && (
+                  <h3 className="text-2xl font-bold mb-2 text-slate-900 dark:text-white">{filteredItems[selectedImageIdx]?.title}</h3>
+                )}
+                {filteredItems[selectedImageIdx]?.description && (
+                  <p className="text-muted-foreground dark:text-slate-400 mb-4">{filteredItems[selectedImageIdx]?.description}</p>
+                )}
+                {filteredItems[selectedImageIdx]?.category && (
+                  <span className="inline-block text-sm bg-primary/10 dark:bg-blue-900/20 text-primary dark:text-blue-400 px-3 py-1 rounded capitalize">
+                    {filteredItems[selectedImageIdx]?.category}
+                  </span>
+                )}
               </div>
             </div>
           </div>

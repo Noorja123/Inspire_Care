@@ -216,7 +216,7 @@ async function sendFast2SmsSms(recipient: string, payloadStr: string, appointmen
   const supabase = await createClient();
 
   // Helper to log SMS delivery auditing records
-  const logSmsResult = async (status: string, requestId?: string, responseText?: string) => {
+  const logSmsResult = async (status: string, requestId?: string | null, responseText?: string | null) => {
     let parsedResponse = null;
     try {
       if (responseText) parsedResponse = JSON.parse(responseText);

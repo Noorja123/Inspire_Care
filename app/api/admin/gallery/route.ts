@@ -9,6 +9,7 @@ export async function POST(request: NextRequest) {
     const title = (formData.get('title') as string) || ''
     const description = (formData.get('description') as string) || ''
     const category = (formData.get('category') as string) || ''
+    const formattedTitle = title.trim() ? title.trim() : null
 
     const supabase = await createClient()
 
@@ -16,7 +17,7 @@ export async function POST(request: NextRequest) {
     if (!file && id) {
       const { data: updated, error: updateError } = await supabase
         .from('gallery')
-        .update({ title, description: description || null, category: category || null })
+        .update({ title: formattedTitle, description: description || null, category: category || null })
         .eq('id', id)
         .select()
 
@@ -30,10 +31,6 @@ export async function POST(request: NextRequest) {
 
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 })
-    }
-
-    if (!title) {
-      return NextResponse.json({ error: 'Title is required' }, { status: 400 })
     }
 
     // Generate unique file name
@@ -71,7 +68,7 @@ export async function POST(request: NextRequest) {
       // Update existing record with new image url
       const { data: updated, error: updateError } = await supabase
         .from('gallery')
-        .update({ title, description: description || null, image_url: imageUrl, category: category || null })
+        .update({ title: formattedTitle, description: description || null, image_url: imageUrl, category: category || null })
         .eq('id', id)
         .select()
 
@@ -92,7 +89,7 @@ export async function POST(request: NextRequest) {
     const { data: galleryData, error: dbError } = await supabase
       .from('gallery')
       .insert({
-        title,
+        title: formattedTitle,
         description: description || null,
         image_url: imageUrl,
         category: category || null,
