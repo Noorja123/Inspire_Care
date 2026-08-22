@@ -65,10 +65,11 @@ export default function ContactPage() {
         <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Contact Us' }]} />
 
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-blue-50 to-green-50 py-16 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">Get in Touch</h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+        <section className="surface-grid border-b border-border bg-background py-16 sm:py-20">
+          <div className="section-shell">
+            <p className="section-kicker">Contact</p>
+            <h1 className="max-w-5xl text-5xl leading-[0.95] text-foreground sm:text-7xl">Get in Touch</h1>
+            <p className="mt-7 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl">
               We&apos;re here to help. Reach out to us with any questions or concerns.
             </p>
           </div>
@@ -81,7 +82,7 @@ export default function ContactPage() {
               {contactInfo.map((info, idx) => {
                 const Icon = info.icon;
                 return (
-                  <div key={idx} className="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-lg border border-gray-200">
+                  <div key={idx} className="border border-border bg-card p-6">
                     <Icon className={`${info.color} w-10 h-10 mb-4`} />
                     <h3 className="text-xl font-bold mb-3">{info.title}</h3>
                     <div className="space-y-1">
@@ -101,7 +102,7 @@ export default function ContactPage() {
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12">
               {/* Form */}
-              <div className="bg-white p-8 rounded-lg shadow-lg">
+              <div className="border border-border bg-card p-8">
                 <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
                 {submitted ? (
                   <div className="bg-green-50 border border-green-200 p-6 rounded-lg text-center">
@@ -188,7 +189,7 @@ export default function ContactPage() {
               {/* Map & Emergency */}
               <div className="space-y-8">
                 {/* Map Placeholder */}
-                <div className="bg-white p-4 rounded-lg shadow-lg overflow-hidden">
+                <div className="overflow-hidden border border-border bg-card p-4">
                   <iframe
                     width="100%"
                     height="400"
@@ -200,7 +201,7 @@ export default function ContactPage() {
                 </div>
 
                 {/* Emergency Card */}
-                <div className="bg-gradient-to-br from-red-50 to-pink-50 border border-red-200 p-6 rounded-lg">
+                <div className="border border-destructive/35 bg-destructive/10 p-6">
                   <h3 className="text-xl font-bold text-red-700 mb-3">Medical Emergency?</h3>
                   <p className="text-red-600 mb-4">
                     Call our emergency hotline immediately. Our 24/7 ambulance service is always ready.
@@ -209,7 +210,7 @@ export default function ContactPage() {
                     href="tel:+9125233333"
                     className="block bg-red-600 text-white text-center py-3 rounded-lg font-bold text-lg hover:bg-red-700 transition-colors"
                   >
-                    📞 +91-253-2333333
+                    <Phone className="mr-2 inline size-5" aria-hidden="true" /> +91-253-2333333
                   </a>
                 </div>
               </div>

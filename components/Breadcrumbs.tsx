@@ -14,18 +14,18 @@ interface BreadcrumbsProps {
 
 export default function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
-    <nav className="bg-gray-50 dark:bg-slate-900 px-4 sm:px-6 lg:px-8 py-4 border-b border-gray-250/20 dark:border-slate-800/60">
-      <div className="max-w-6xl mx-auto">
-        <ol className="flex items-center space-x-2 text-sm">
+    <nav aria-label="Breadcrumb" className="border-b border-border bg-background">
+      <div className="section-shell py-3">
+        <ol className="flex min-h-8 items-center text-xs font-semibold uppercase tracking-[0.08em]">
           {items.map((item, index) => (
             <li key={index} className="flex items-center">
-              {index > 0 && <ChevronRight className="w-4 h-4 text-muted-foreground mx-2" />}
+              {index > 0 && <ChevronRight className="mx-2 size-3.5 text-muted-foreground" aria-hidden="true" />}
               {item.href ? (
-                <Link href={item.href} className="text-primary hover:underline font-medium">
+                <Link href={item.href} className="flex min-h-8 items-center text-primary hover:underline">
                   {item.label}
                 </Link>
               ) : (
-                <span className="text-foreground font-medium">{item.label}</span>
+                <span aria-current="page" className="text-muted-foreground">{item.label}</span>
               )}
             </li>
           ))}

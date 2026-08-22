@@ -367,14 +367,17 @@ export default function BookAppointmentCard({ defaultDepartment, onClose }: { de
   }
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-lg p-5 sm:p-6 border border-border dark:border-slate-800 shadow-sm w-full">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-semibold text-foreground">Book Appointment</h3>
+    <div className="w-full border border-border bg-card p-5 sm:p-7">
+      <div className="mb-5 flex items-center justify-between border-b border-border pb-4">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">Appointments</p>
+          <h3 className="mt-1 font-sans text-xl font-semibold text-foreground">Book an appointment</h3>
+        </div>
         {onClose && (
           <button
             type="button"
             onClick={onClose}
-            className="w-9 h-9 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors active:scale-95 duration-150"
+            className="flex size-11 items-center justify-center border border-border text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary"
             aria-label="Close"
           >
             <X className="w-4 h-4" />
@@ -395,7 +398,7 @@ export default function BookAppointmentCard({ defaultDepartment, onClose }: { de
       {holdExpiry && (
         <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg text-xs text-blue-800 flex justify-between items-center font-medium">
           <span className="flex items-center gap-1">
-            <ShieldCheck className="w-3.5 h-3.5 text-blue-600 animate-pulse" />
+            <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
             Your slot is reserved. Complete booking before expiry.
           </span>
           <span className="bg-blue-100 px-2 py-0.5 rounded text-blue-700 font-bold">{countdown}</span>

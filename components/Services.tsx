@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { Loader2, ArrowRight, Shield, Zap, Users } from 'lucide-react';
+import { Loader2, ArrowRight, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -68,15 +68,18 @@ export default function Services() {
   }, []);
 
   return (
-    <section id="services" className="py-16 bg-white dark:bg-slate-900/60 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="services" className="border-b border-border bg-background py-20 sm:py-24">
+      <div className="section-shell">
         {/* Section Header */}
-        <div className="text-center mb-12 space-y-3">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white text-balance">
+        <div className="mb-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+          <div>
+            <p className="section-kicker">Departments</p>
+            <h2 className="section-title">
             Comprehensive Medical Services
-          </h2>
-          <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            From preventive care to advanced treatments, our complete range of services delivers exceptional outcomes with cutting-edge medical technology.
+            </h2>
+          </div>
+          <p className="max-w-2xl text-base leading-7 text-muted-foreground lg:justify-self-end">
+            From preventive care to advanced treatment, each department is connected to diagnostics, inpatient support and specialist referrals.
           </p>
         </div>
 
@@ -90,11 +93,11 @@ export default function Services() {
           </div>
         ) : (
           <>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid border-l border-t border-border md:grid-cols-2 lg:grid-cols-3">
               {services.map((service) => (
                 <div
                   key={service.id}
-                  className="bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-primary/30 dark:hover:border-blue-500/30 hover:shadow-md active:scale-[0.99] transition-all duration-300 group cursor-pointer flex flex-col justify-between"
+                  className="group flex flex-col justify-between overflow-hidden border-b border-r border-border bg-card transition-colors duration-200 hover:bg-muted/45"
                 >
                   <div>
                     {/* Image */}
@@ -102,28 +105,29 @@ export default function Services() {
                       <img
                         src={service.image_url}
                         alt={service.name}
-                        className="w-full h-44 object-cover"
+                        loading="lazy"
+                        className="h-48 w-full object-cover grayscale-[15%] transition-[filter] duration-200 group-hover:grayscale-0"
                       />
                     ) : (
-                      <div className="w-full h-44 bg-gradient-to-br from-primary to-blue-700 flex items-center justify-center">
-                        <Shield className="w-12 h-12 text-white opacity-40" />
+                      <div className="flex h-48 w-full items-center justify-center bg-primary">
+                        <Shield className="size-11 text-primary-foreground/45" />
                       </div>
                     )}
 
                     {/* Content */}
-                    <div className="p-5 space-y-2">
-                      <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                    <div className="space-y-3 p-6">
+                      <h3 className="font-sans text-xl font-semibold leading-snug text-foreground">
                         {service.name}
                       </h3>
 
                       {service.category && (
-                        <span className="inline-block px-2.5 py-0.5 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-md">
+                        <span className="inline-block border-l-2 border-secondary pl-2 text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">
                           {service.category}
                         </span>
                       )}
 
                       {service.description && (
-                        <p className="text-slate-600 dark:text-slate-400 text-xs md:text-sm leading-relaxed line-clamp-3">
+                        <p className="line-clamp-3 text-sm leading-6 text-muted-foreground">
                           {service.description}
                         </p>
                       )}
@@ -131,10 +135,10 @@ export default function Services() {
                   </div>
 
                   {/* Footer */}
-                  <div className="p-5 pt-0">
-                    <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-end">
-                      <Link href="/services" className="text-primary dark:text-blue-400 hover:text-primary/80 dark:hover:text-blue-300 font-bold text-sm flex items-center gap-1">
-                        Learn More →
+                  <div className="px-6 pb-6">
+                    <div className="flex border-t border-border pt-4">
+                      <Link href="/services" className="flex min-h-11 items-center gap-2 text-sm font-bold text-primary hover:underline">
+                        Explore service <ArrowRight className="size-4" />
                       </Link>
                     </div>
                   </div>
@@ -143,9 +147,9 @@ export default function Services() {
             </div>
 
             {/* CTA Section */}
-            <div className="mt-10 text-center">
+            <div className="mt-10">
               <Link href="/services">
-                <Button size="lg" className="bg-primary hover:bg-primary/95 text-white dark:bg-blue-600 dark:hover:bg-blue-700 font-semibold h-12 px-8 active:scale-95 transition-all cursor-pointer shadow-sm">
+                <Button size="lg">
                   View All Services
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>

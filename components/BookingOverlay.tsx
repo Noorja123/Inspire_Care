@@ -10,10 +10,6 @@ export default function BookingOverlay() {
   const [doctorId, setDoctorId] = useState<string | undefined>(undefined)
   const pathname = usePathname()
 
-  if (pathname?.startsWith('/admin')) {
-    return null
-  }
-
   useEffect(() => {
     const handler = (e: Event) => {
       const evt = e as CustomEvent
@@ -27,6 +23,10 @@ export default function BookingOverlay() {
     return () => window.removeEventListener('openBooking', handler as EventListener)
   }, [])
 
+  if (pathname?.startsWith('/admin')) {
+    return null
+  }
+
   const close = () => {
     setOpen(false)
     setDoctorId(undefined)
@@ -36,8 +36,8 @@ export default function BookingOverlay() {
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-center overflow-y-auto">
-      <div className="absolute inset-0 bg-black/40" onClick={close} />
+    <div className="fixed inset-0 z-50 flex justify-center overflow-y-auto" role="dialog" aria-modal="true" aria-label="Book an appointment">
+      <div className="absolute inset-0 bg-black/65" onClick={close} />
       <div className="relative z-10 w-full max-w-lg flex flex-col my-auto py-6 px-4">
         <BookAppointmentCard defaultDepartment={undefined} onClose={close} />
       </div>

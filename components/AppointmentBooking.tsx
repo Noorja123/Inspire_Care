@@ -267,14 +267,14 @@ export default function AppointmentBooking({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-xs transition-all">
-      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-auto border border-border dark:border-slate-800 transition-all duration-300">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/65 p-4">
+      <div className="max-h-[90vh] w-full max-w-2xl overflow-auto border border-border bg-card">
         {/* Header */}
         <div className="sticky top-0 bg-primary dark:bg-blue-600 text-white px-6 py-4 flex items-center justify-between border-b border-primary-foreground/10 z-10 shadow-sm">
           <h2 className="text-xl sm:text-2xl font-bold">Book an Appointment</h2>
           <button
             onClick={handleCloseAndReset}
-            className="p-2 hover:bg-white/20 rounded-lg transition-all w-11 h-11 flex items-center justify-center active:scale-90 cursor-pointer"
+            className="flex size-11 items-center justify-center border border-white/25 transition-colors hover:bg-white/15"
             aria-label="Close Booking Dialog"
           >
             <X className="w-6 h-6" />
@@ -355,7 +355,7 @@ export default function AppointmentBooking({
                       Available Time Slots for {getDayOfWeek(formData.appointmentDate)}
                     </label>
                     {holdExpiry && (
-                      <span className="text-xs bg-blue-50 dark:bg-blue-950/40 text-blue-800 dark:text-blue-400 font-semibold border border-blue-200 dark:border-blue-900/30 rounded-full px-2.5 py-0.5 flex items-center gap-1.5 animate-pulse">
+                      <span className="flex items-center gap-1.5 border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-800 dark:border-blue-900/30 dark:bg-blue-950/40 dark:text-blue-400">
                         <ShieldCheck className="w-3.5 h-3.5" />
                         Hold: {countdown}
                       </span>

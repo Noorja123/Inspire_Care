@@ -70,10 +70,11 @@ export default function GalleryPage() {
         <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Gallery' }]} />
 
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-blue-50 to-green-50 dark:from-slate-900 dark:to-slate-950 py-16 px-4 sm:px-6 lg:px-8 border-b border-blue-100/20 dark:border-slate-800/40">
-          <div className="max-w-6xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">Our Facilities & Events</h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+        <section className="surface-grid border-b border-border bg-background py-16 sm:py-20">
+          <div className="section-shell">
+            <p className="section-kicker">Inside the hospital</p>
+            <h1 className="max-w-5xl text-5xl leading-[0.95] text-foreground sm:text-7xl">Our Facilities &amp; Events</h1>
+            <p className="mt-7 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl">
               Explore our state-of-the-art hospital facilities and memorable moments from our healthcare journey.
             </p>
           </div>
@@ -83,7 +84,7 @@ export default function GalleryPage() {
         <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800/60">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-xl font-semibold mb-6">Filter by Category</h2>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap border-l border-t border-border">
               {categories.map(cat => (
                 <button
                   key={cat}
@@ -91,10 +92,10 @@ export default function GalleryPage() {
                     setSelectedCategory(cat);
                     setSelectedImageIdx(null);
                   }}
-                  className={`px-4 py-2 rounded-full font-semibold transition-all capitalize cursor-pointer ${
+                  className={`min-h-11 border-b border-r border-border px-4 py-2 font-semibold capitalize transition-colors cursor-pointer ${
                     selectedCategory === cat
-                      ? 'bg-primary dark:bg-blue-600 text-white'
-                      : 'bg-gray-100 dark:bg-slate-900 text-foreground dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-800'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-card text-foreground hover:bg-muted'
                   }`}
                 >
                   {cat === 'all' ? 'All Images' : cat}
@@ -121,10 +122,10 @@ export default function GalleryPage() {
                   <div
                     key={item.id}
                     onClick={() => setSelectedImageIdx(idx)}
-                    className="group cursor-pointer bg-white dark:bg-slate-900 rounded-lg overflow-hidden shadow-md hover:shadow-xl border border-transparent dark:border-slate-800/60 transition-all transform hover:scale-105"
+                    className="group cursor-pointer overflow-hidden border border-border bg-card transition-colors hover:bg-muted/40"
                   >
                     {/* Image */}
-                    <div className="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white relative overflow-hidden">
+                    <div className="relative flex h-48 items-center justify-center overflow-hidden bg-primary text-primary-foreground">
                       {item.image_url ? (
                         <img
                           src={item.image_url}
@@ -218,7 +219,7 @@ export default function GalleryPage() {
                 { label: 'ICU Beds', value: '30' },
                 { label: 'Ambulances', value: '12' },
               ].map((stat, idx) => (
-                <div key={idx} className="text-center p-6 bg-gradient-to-br from-blue-50 to-green-50 dark:from-slate-900/50 dark:to-slate-950/20 rounded-lg border border-blue-200/60 dark:border-slate-800">
+                <div key={idx} className="border border-border bg-card p-6 text-center">
                   <div className="text-4xl font-bold text-primary dark:text-blue-400 mb-2">{stat.value}</div>
                   <div className="text-muted-foreground dark:text-slate-400 font-semibold">{stat.label}</div>
                 </div>

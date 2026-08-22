@@ -44,10 +44,10 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center px-4">
+    <div className="surface-grid flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
         {/* Card */}
-        <div className="bg-white rounded-lg shadow-2xl p-8 space-y-6">
+        <div className="space-y-6 border border-border bg-card p-8">
           {/* Header */}
           <div className="text-center space-y-2">
             <div className="flex justify-center mb-4">
@@ -121,7 +121,7 @@ export default function AdminLogin() {
             <p className="text-xs text-muted-foreground text-center mb-3">
               Demo Credentials (for testing)
             </p>
-            <div className="bg-blue-50 p-3 rounded-lg text-xs space-y-1 text-blue-900">
+            <div className="space-y-1 border border-border bg-muted/50 p-3 text-xs text-foreground">
               <p><strong>Email:</strong> admin@teaminspirecare.com</p>
               <p><strong>Password:</strong> contact your developer</p>
             </div>

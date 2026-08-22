@@ -118,10 +118,11 @@ export default function TestimonialsPage() {
         <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Patient Testimonials' }]} />
 
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-blue-50 to-green-50 py-16 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">Patient Testimonials</h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+        <section className="surface-grid border-b border-border bg-background py-16 sm:py-20">
+          <div className="section-shell">
+            <p className="section-kicker">Patient voices</p>
+            <h1 className="max-w-5xl text-5xl leading-[0.95] text-foreground sm:text-7xl">Patient Testimonials</h1>
+            <p className="mt-7 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl">
               Hear from our patients about their experiences and the care they received.
             </p>
           </div>
@@ -131,7 +132,7 @@ export default function TestimonialsPage() {
         <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white border-b">
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-4 gap-8 text-center">
-              <div className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
+              <div className="border border-border bg-card p-6">
                 <div className="text-5xl font-bold text-primary mb-2">{averageRating}</div>
                 <div className="flex justify-center gap-1 mb-2">
                   {[...Array(5)].map((_, i) => (
@@ -171,10 +172,10 @@ export default function TestimonialsPage() {
         <section className="py-8 px-4 sm:px-6 lg:px-8 bg-gray-50 border-b">
           <div className="max-w-6xl mx-auto">
             <p className="text-sm text-muted-foreground mb-4">Filter by rating:</p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap border-l border-t border-border">
               <button
                 onClick={() => setRatingFilter('all')}
-                className={`px-4 py-2 rounded-full font-semibold transition-all ${
+                className={`min-h-11 border-b border-r border-border px-4 py-2 font-semibold transition-colors ${
                   ratingFilter === 'all'
                     ? 'bg-primary text-white'
                     : 'bg-white text-foreground border border-gray-300 hover:border-primary'
@@ -186,7 +187,7 @@ export default function TestimonialsPage() {
                 <button
                   key={rating}
                   onClick={() => setRatingFilter(rating.toString())}
-                  className={`px-4 py-2 rounded-full font-semibold transition-all flex items-center gap-2 ${
+                  className={`flex min-h-11 items-center gap-2 border-b border-r border-border px-4 py-2 font-semibold transition-colors ${
                     ratingFilter === rating.toString()
                       ? 'bg-primary text-white'
                       : 'bg-white text-foreground border border-gray-300 hover:border-primary'

@@ -1,129 +1,56 @@
-'use client';
-
 import Link from 'next/link';
-import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react';
+
+const quickLinks = [
+  ['About', '/about'],
+  ['Services', '/services'],
+  ['Doctors', '/doctors'],
+  ['Gallery', '/gallery'],
+  ['Contact', '/#contact'],
+];
+
+const departments = ['General medicine', 'Surgical care', 'Paediatrics', 'Orthopaedics'];
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-white border-t border-slate-200 dark:border-slate-800/80 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">
-          {/* Brand */}
-          <div className="space-y-4">
-            <h3 className="text-xl font-extrabold text-blue-600 dark:text-blue-400">Team Inspire Care</h3>
-            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed max-w-xs">
-              Multispeciality Hospital dedicated to providing compassionate, high-quality and comprehensive healthcare services.
+    <footer className="border-t border-white/10 bg-[#08171c] text-white">
+      <div className="section-shell py-14 sm:py-16">
+        <div className="grid gap-10 border-b border-white/15 pb-12 lg:grid-cols-[1.35fr_0.65fr_0.8fr_1.2fr]">
+          <div>
+            <p className="text-xl font-bold">Team Inspire Care</p>
+            <p className="mt-1 text-xs font-bold uppercase tracking-[0.18em] text-white/45">Multispeciality Hospital</p>
+            <p className="mt-5 max-w-sm text-sm leading-6 text-white/60">
+              Compassionate, coordinated healthcare for patients and families across Mira Road and Thane.
             </p>
-            <div className="flex gap-4 pt-2">
-              <a href="#" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 w-10 h-10 flex items-center justify-center" aria-label="Facebook">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 w-10 h-10 flex items-center justify-center" aria-label="Twitter">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 w-10 h-10 flex items-center justify-center" aria-label="LinkedIn">
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 w-10 h-10 flex items-center justify-center" aria-label="Instagram">
-                <Instagram className="w-5 h-5" />
-              </a>
+          </div>
+
+          <div>
+            <h2 className="font-sans text-xs font-bold uppercase tracking-[0.16em] text-white/45">Navigate</h2>
+            <ul className="mt-4 space-y-2">
+              {quickLinks.map(([label, href]) => <li key={label}><Link href={href} className="inline-flex min-h-9 items-center text-sm text-white/75 hover:text-white hover:underline">{label}</Link></li>)}
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="font-sans text-xs font-bold uppercase tracking-[0.16em] text-white/45">Departments</h2>
+            <ul className="mt-4 space-y-2 text-sm text-white/65">
+              {departments.map((department) => <li key={department} className="min-h-9 py-1.5">{department}</li>)}
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="font-sans text-xs font-bold uppercase tracking-[0.16em] text-white/45">Contact</h2>
+            <div className="mt-5 space-y-5 text-sm">
+              <a href="tel:+919167133346" className="group flex items-start gap-3 text-white/75 hover:text-white"><Phone className="mt-0.5 size-4 shrink-0" /><span><span className="block text-xs text-white/45">24/7 emergency</span><span className="mt-0.5 block font-bold">+91 91671 33346</span></span><ArrowUpRight className="ml-auto size-4 opacity-50" /></a>
+              <a href="mailto:contact@teaminspirecare.com" className="flex items-start gap-3 text-white/75 hover:text-white"><Mail className="mt-0.5 size-4 shrink-0" /><span className="break-all">contact@teaminspirecare.com</span></a>
+              <p className="flex items-start gap-3 text-white/60"><MapPin className="mt-0.5 size-4 shrink-0" />Mira Road (E), Thane 401107</p>
             </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-bold text-sm uppercase tracking-wider mb-4 text-slate-900 dark:text-slate-200">Quick Links</h4>
-            <ul className="space-y-3.5 text-sm">
-              <li>
-                <Link href="/" className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors py-1 block">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors py-1 block">
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link href="/doctors" className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors py-1 block">
-                  Doctors
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors py-1 block">
-                  About
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Specialties */}
-          <div>
-            <h4 className="font-bold text-sm uppercase tracking-wider mb-4 text-slate-900 dark:text-slate-200">Specialties</h4>
-            <ul className="space-y-3.5 text-sm">
-              <li>
-                <a href="#" className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors py-1 block">
-                  General Medicine
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors py-1 block">
-                  Surgical
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors py-1 block">
-                  Pediatrics
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors py-1 block">
-                  Orthopedics
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h4 className="font-bold text-sm uppercase tracking-wider mb-4 text-slate-900 dark:text-slate-200">Contact</h4>
-            <ul className="space-y-3.5 text-sm text-slate-600 dark:text-slate-400">
-              <li>
-                <p className="font-bold text-slate-500 dark:text-slate-400">Emergency Hotline</p>
-                <p className="text-red-600 dark:text-red-400 font-extrabold text-base tracking-wide mt-0.5">+91-91671-33346</p>
-              </li>
-              <li>
-                <p className="font-bold text-slate-500 dark:text-slate-400">General Inquiries</p>
-                <p className="font-semibold text-slate-700 dark:text-slate-300 mt-0.5">+91-91671-33346</p>
-              </li>
-              <li>
-                <p className="font-bold text-slate-500 dark:text-slate-400">Email Support</p>
-                <p className="text-slate-700 dark:text-slate-300 mt-0.5">contact@teaminspirecare.com</p>
-              </li>
-            </ul>
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-slate-200 dark:border-slate-800 py-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
-            <p>
-              &copy; {currentYear} Team Inspire Care. All rights reserved.
-            </p>
-            <div className="flex flex-wrap gap-x-6 gap-y-2">
-              <a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors py-1">
-                Privacy Policy
-              </a>
-              <a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors py-1">
-                Terms of Service
-              </a>
-              <a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors py-1">
-                Compliance
-              </a>
-            </div>
-          </div>
+        <div className="flex flex-col gap-4 pt-7 text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Team Inspire Care. All rights reserved.</p>
+          <p>Care information on this website does not replace medical advice.</p>
         </div>
       </div>
     </footer>

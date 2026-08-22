@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 
 export default function EmergencyButton() {
   const pathname = usePathname();
-  const emergencyNumber = '123456789';
+  const emergencyNumber = '+919167133346';
   const emergencyNumberFormatted = `tel:${emergencyNumber}`;
 
   if (pathname?.startsWith('/admin')) {
@@ -15,11 +15,12 @@ export default function EmergencyButton() {
   return (
     <a
       href={emergencyNumberFormatted}
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse"
+      className="fixed bottom-4 right-4 z-40 flex min-h-12 items-center gap-2 border border-white/20 bg-destructive px-4 py-3 text-sm font-bold text-white shadow-[0_4px_16px_rgba(0,0,0,0.18)] transition-colors duration-200 hover:bg-destructive/90 md:hidden"
       title="Emergency Call"
+      aria-label="Call the 24/7 emergency number"
     >
       <Phone className="w-5 h-5" />
-      <span className="hidden sm:inline">Call Now</span>
+      <span className="hidden sm:inline">Emergency call</span>
     </a>
   );
 }

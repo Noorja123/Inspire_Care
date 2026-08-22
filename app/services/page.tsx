@@ -91,10 +91,11 @@ export default function ServicesPage() {
         ) : null}
 
         {/* Hero Section */}
-        <section className="bg-linear-to-r from-blue-50 to-green-50 dark:from-slate-900 dark:to-slate-950 py-16 px-4 sm:px-6 lg:px-8 border-b border-slate-100 dark:border-slate-800/40">
-          <div className="max-w-6xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">Comprehensive Healthcare Services</h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+        <section className="surface-grid border-b border-border bg-background py-16 sm:py-20">
+          <div className="section-shell">
+            <p className="section-kicker">Departments</p>
+            <h1 className="max-w-5xl text-5xl leading-[0.95] text-foreground sm:text-7xl">Comprehensive Healthcare Services</h1>
+            <p className="mt-7 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl">
               World-class medical facilities across multiple specializations to meet all your healthcare needs.
             </p>
           </div>
@@ -104,14 +105,14 @@ export default function ServicesPage() {
         <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-b border-gray-200 dark:border-slate-800">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-xl font-semibold mb-6">Filter by Department</h2>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap border-l border-t border-border">
               {categories.map(cat => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 rounded-full font-semibold transition-all cursor-pointer ${selectedCategory === cat
-                    ? 'bg-primary dark:bg-blue-600 text-white'
-                    : 'bg-gray-100 dark:bg-slate-900 text-foreground dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-800'
+                  className={`min-h-11 border-b border-r border-border px-4 py-2 font-semibold transition-colors cursor-pointer ${selectedCategory === cat
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-card text-foreground hover:bg-muted'
                     }`}
                 >
                   {cat === 'all' ? 'All Services' : cat}
@@ -138,7 +139,7 @@ export default function ServicesPage() {
                       className="w-full h-40 object-cover"
                     />
                   ) : (
-                    <div className="w-full h-40 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                    <div className="flex h-40 w-full items-center justify-center bg-primary">
                       <Shield className="w-12 h-12 text-white opacity-40" />
                     </div>
                   )}

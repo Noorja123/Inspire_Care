@@ -58,12 +58,13 @@ export default function AboutPage() {
         <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'About Us' }]} />
 
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-slate-900 dark:to-slate-950 py-20 px-4 sm:px-6 lg:px-8 border-b border-blue-100/20 dark:border-slate-800/40">
-          <div className="max-w-6xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6 text-balance">
+        <section className="surface-grid border-b border-border bg-background py-16 sm:py-20">
+          <div className="section-shell">
+            <p className="section-kicker">About the hospital</p>
+            <h1 className="max-w-4xl text-5xl leading-[0.95] text-foreground sm:text-7xl">
               Caring with Compassion 
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
+            <p className="mt-7 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl">
               Team Inspire Care Multispeciality Hospital has been serving our community with dedication, 
               expertise, and compassion. We are committed to providing world-class healthcare to every patient.
             </p>
@@ -134,7 +135,7 @@ export default function AboutPage() {
               {values.map((value, idx) => {
                 const Icon = value.icon;
                 return (
-                  <div key={idx} className="p-6 bg-gradient-to-br from-blue-50 to-green-50 dark:from-slate-900/50 dark:to-slate-950/20 rounded-lg border border-blue-200 dark:border-slate-800">
+                  <div key={idx} className="border border-border bg-card p-6">
                     <div className="flex items-start gap-4">
                       <Icon className="w-8 h-8 text-primary flex-shrink-0 mt-1" />
                       <div>

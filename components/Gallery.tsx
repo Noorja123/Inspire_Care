@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { Loader2, X, ArrowRight } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
@@ -45,17 +44,27 @@ export default function Gallery() {
     fetchGallery();
   }, []);
 
+  useEffect(() => {
+    if (!selectedId) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setSelectedId(null);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [selectedId]);
+
   const selected = items.find((item) => item.id === selectedId);
 
   return (
-    <section className="py-20 bg-gray-50 dark:bg-slate-950/40 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+    <section className="border-b border-border bg-card py-20 sm:py-24">
+      <div className="section-shell">
+        <div className="mb-12">
+          <p className="section-kicker">Inside the hospital</p>
+          <h2 className="section-title">
             Hospital Gallery
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore our state-of-the-art facilities and services
+          <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground">
+            A closer look at the spaces, equipment and teams that support your care.
           </p>
         </div>
 
@@ -70,46 +79,49 @@ export default function Gallery() {
         ) : (
           <>
             {/* Gallery Grid */}
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid border-l border-t border-border md:grid-cols-3">
               {items.map((item) => (
-                <div
+                <button
+                  type="button"
                   key={item.id}
                   onClick={() => setSelectedId(item.id)}
-                  className="relative group cursor-pointer overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800/80 shadow-sm active:scale-[0.99] transition-all duration-300"
+                  className="group relative overflow-hidden border-b border-r border-border bg-muted text-left"
+                  aria-label={`Open ${item.title || 'hospital gallery image'}`}
                 >
                   <div className="relative h-64 bg-gray-200 dark:bg-slate-800">
                     {item.image_url ? (
                       <img
                         src={item.image_url}
                         alt={item.title || 'Hospital Gallery Image'}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                        className="h-full w-full object-cover grayscale-[12%] transition-[filter] duration-200 group-hover:grayscale-0"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                      <div className="flex h-full w-full items-center justify-center bg-muted">
                         <span className="text-muted-foreground">No image</span>
                       </div>
                     )}
                   </div>
                   
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-300 flex items-center justify-center">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center px-4 transform translate-y-2 group-hover:translate-y-0">
-                      {item.title && <p className="text-white font-bold text-lg">{item.title}</p>}
+                  <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/85 to-transparent p-5 pt-16 text-left">
+                    <div>
+                      {item.title && <p className="text-lg font-bold text-white">{item.title}</p>}
                       {item.category && (
-                        <span className="inline-block mt-2 px-2 py-0.5 text-[10px] uppercase tracking-wider bg-white/20 text-white rounded font-semibold backdrop-blur-xs">
+                        <span className="mt-1 inline-block text-[10px] font-bold uppercase tracking-[0.14em] text-white/75">
                           {item.category}
                         </span>
                       )}
                     </div>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
 
             {/* View All Button */}
-            <div className="mt-12 text-center">
+            <div className="mt-10">
               <Link href="/gallery">
-                <Button size="lg" className="bg-primary hover:bg-primary/95 text-white dark:bg-blue-600 dark:hover:bg-blue-700 font-semibold h-12 px-8 active:scale-95 transition-all cursor-pointer shadow-sm">
+                <Button size="lg">
                   View All Gallery
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
@@ -119,17 +131,20 @@ export default function Gallery() {
             {/* Lightbox Modal */}
             {selected && (
               <div
-                className="fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4 backdrop-blur-xs"
+                className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
                 onClick={() => setSelectedId(null)}
+                role="dialog"
+                aria-modal="true"
+                aria-label={selected.title || 'Gallery image'}
               >
                 <div
-                  className="relative bg-white dark:bg-slate-900 rounded-xl overflow-hidden max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-800"
+                  className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden border border-border bg-card"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {/* Close Button (Expanded Touch Target >= 44x44px) */}
                   <button
                     onClick={() => setSelectedId(null)}
-                    className="absolute top-4 right-4 z-10 bg-black/60 hover:bg-black/85 text-white rounded-full p-2.5 transition-colors w-11 h-11 flex items-center justify-center active:scale-90 cursor-pointer"
+                    className="absolute right-4 top-4 z-10 flex size-11 items-center justify-center bg-black/70 text-white transition-colors hover:bg-black"
                     aria-label="Close Lightbox"
                   >
                     <X className="w-6 h-6" />
@@ -156,7 +171,7 @@ export default function Gallery() {
                         </h3>
                       )}
                       {selected.category && (
-                        <p className="inline-block px-3 py-1 bg-primary/10 dark:bg-blue-400/10 text-primary dark:text-blue-400 text-xs font-semibold rounded-full capitalize">
+                        <p className="inline-block border-l-2 border-primary pl-2 text-xs font-bold uppercase tracking-[0.12em] text-primary">
                           {selected.category}
                         </p>
                       )}

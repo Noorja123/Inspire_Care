@@ -112,10 +112,11 @@ export default function DoctorsPage() {
         <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Our Doctors' }]} />
 
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-slate-900 dark:to-slate-950 py-16 px-4 sm:px-6 lg:px-8 border-b border-blue-100/20 dark:border-slate-800/40">
-          <div className="max-w-6xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">Meet Our Expert Doctors</h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+        <section className="surface-grid border-b border-border bg-background py-16 sm:py-20">
+          <div className="section-shell">
+            <p className="section-kicker">Clinical team</p>
+            <h1 className="max-w-5xl text-5xl leading-[0.95] text-foreground sm:text-7xl">Meet Our Expert Doctors</h1>
+            <p className="mt-7 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl">
               Experienced and compassionate healthcare professionals dedicated to your wellness.
             </p>
           </div>
@@ -133,15 +134,15 @@ export default function DoctorsPage() {
                 className="w-full px-4 py-3 border border-gray-300 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap border-l border-t border-border">
               {departments.map(dept => (
                 <button
                   key={dept}
                   onClick={() => setSelectedDept(dept)}
-                  className={`px-4 py-2 rounded-full font-semibold transition-all cursor-pointer ${
+                  className={`min-h-11 border-b border-r border-border px-4 py-2 font-semibold transition-colors cursor-pointer ${
                     selectedDept === dept
-                      ? 'bg-primary dark:bg-blue-600 text-white'
-                      : 'bg-gray-100 dark:bg-slate-900 text-foreground dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-800'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-card text-foreground hover:bg-muted'
                   }`}
                 >
                   {dept === 'all' ? 'All Departments' : dept}
@@ -166,7 +167,7 @@ export default function DoctorsPage() {
                         className="w-full h-40 object-cover"
                       />
                     ) : (
-                      <div className="w-full h-40 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                      <div className="flex h-40 w-full items-center justify-center bg-primary">
                         <User className="w-16 h-16 text-white opacity-40" />
                       </div>
                     )}

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { Loader2, MapPin, Briefcase, Star, ArrowRight, Users } from 'lucide-react';
+import { Loader2, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -65,14 +65,17 @@ export default function Doctors() {
   }, []);
 
   return (
-    <section id="doctors" className="py-16 bg-slate-50 dark:bg-slate-950/60 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="doctors" className="border-b border-border bg-card py-20 sm:py-24">
+      <div className="section-shell">
         {/* Section Header */}
-        <div className="text-center mb-12 space-y-3">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white text-balance">
+        <div className="mb-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+          <div>
+            <p className="section-kicker">Specialists</p>
+            <h2 className="section-title">
             Our Medical Team
-          </h2>
-          <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+            </h2>
+          </div>
+          <p className="max-w-2xl text-base leading-7 text-muted-foreground lg:justify-self-end">
             Board-certified specialists with extensive experience, committed to delivering exceptional healthcare outcomes.
           </p>
         </div>
@@ -87,11 +90,11 @@ export default function Doctors() {
           </div>
         ) : (
           <>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid border-l border-t border-border md:grid-cols-2 lg:grid-cols-3">
               {doctors.map((doctor) => (
                 <div
                   key={doctor.id}
-                  className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-primary/30 dark:hover:border-blue-500/30 hover:shadow-md transition-all duration-300 group cursor-pointer active:scale-[0.99] flex flex-col justify-between"
+                  className="group flex flex-col justify-between overflow-hidden border-b border-r border-border bg-card transition-colors duration-200 hover:bg-muted/40"
                 >
                   <div>
                     {/* Doctor Image / Avatar */}
@@ -100,13 +103,14 @@ export default function Doctors() {
                         <img
                           src={doctor.image_url}
                           alt={doctor.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                          className="h-full w-full object-cover grayscale-[12%] transition-[filter] duration-200 group-hover:grayscale-0"
                         />
                       </div>
                     ) : (
                       <div className="h-44 bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                        <div className="w-16 h-16 bg-primary/10 dark:bg-blue-400/10 rounded-full flex items-center justify-center">
-                          <span className="text-2xl text-primary dark:text-blue-400 font-bold">
+                        <div className="flex size-16 items-center justify-center border border-primary/25 bg-primary/10">
+                          <span className="text-2xl font-bold text-primary">
                             {doctor.name.charAt(0)}
                           </span>
                         </div>
@@ -114,13 +118,13 @@ export default function Doctors() {
                     )}
 
                     {/* Doctor Info */}
-                    <div className="p-5 space-y-3">
+                    <div className="space-y-3 p-6">
                       <div>
-                        <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 leading-tight">
+                        <h3 className="font-sans text-lg font-bold leading-tight text-foreground">
                           {doctor.name}
                         </h3>
                         {doctor.specialization && (
-                          <p className="text-primary dark:text-blue-400 font-semibold text-xs mt-1">
+                          <p className="mt-1 text-xs font-bold uppercase tracking-[0.1em] text-primary">
                             {doctor.specialization}
                           </p>
                         )}
@@ -154,9 +158,9 @@ export default function Doctors() {
             </div>
 
             {/* CTA Section */}
-            <div className="mt-10 text-center">
+            <div className="mt-10">
               <Link href="/doctors">
-                <Button size="lg" className="bg-primary hover:bg-primary/95 text-white dark:bg-blue-600 dark:hover:bg-blue-700 font-semibold h-12 px-8 active:scale-95 transition-all cursor-pointer shadow-sm">
+                <Button size="lg">
                   View All Specialists
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
